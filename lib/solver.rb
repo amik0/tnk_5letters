@@ -2,7 +2,7 @@ class Solver
   attr_accessor :words_possible, :attempts, :guessed_letters
 
   def initialize
-    self.words_possible =  DictionaryService::Import.dataset.presence || DictionaryService::Import.run
+    self.words_possible = (DictionaryService::Import.dataset.presence || DictionaryService::Import.run).dup
     self.attempts = []
     self.guessed_letters = {}
   end
@@ -43,7 +43,6 @@ class Solver
     end
 
     attempt.letters.each.with_index do |(letter, mark), index|
-      # puts [letter, mark, index]
       new_words = new_words.delete_if do |word|
         case mark
         when :yellow
