@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: ./docker/Dockerfile
+    volumes:
+      - ../:/rails
+    ports:
+      - '8020:8020'
+    env_file:
+      - .env
+    command: ./bin/rails server -p 8020
