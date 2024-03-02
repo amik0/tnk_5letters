@@ -2,7 +2,7 @@ class Attempt
   attr_accessor :letters
 
   def initialize(letters)
-    self.letters = letters
+    self.letters = letters.map { |letter| [letter.first.downcase, letter.second.to_sym] }
   end
 
   def valid?

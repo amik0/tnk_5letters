@@ -1,3 +1,5 @@
+# TODO: symbols renaming
+
 class Solver
   attr_accessor :words_possible, :attempts, :guessed_letters
 

@@ -8,8 +8,8 @@ RSpec.describe SolverController do
           attempts: [
             [['м', :white], ['а', :white], ['л', :grey], ['я', :grey], ['р', :grey]],
             [['с', :grey], ['м', :white], ['е', :grey], ['н', :grey], ['а', :white]],
-            [['т', :white], ['о', :grey], ['м', :white], ['а', :white], ['т', :grey]],
-            [['ш', :yellow], ['т', :yellow], ['а', :yellow], ['м', :yellow], ['м', :grey]]
+            [['Т', :white], ['о', :grey], ['м', :white], ['а', :white], ['т', :grey]],
+            [['ш', :yellow], ['т', :yellow], ['А', :yellow], ['м', :yellow], ['м', :grey]]
           ]
         }
       end
