@@ -23,11 +23,15 @@ class Solver
 
     possible_letters = {}
     excess_letters = {}
+    misplaced_letters = {}
 
     attempt.letters.each.with_index do |(letter, mark), index|
       if mark == :yellow
         self.guessed_letters[letter] ||= [index]
         self.guessed_letters[letter] << index unless guessed_letters[letter].include?(index)
+      elsif guessed_letters[letter].present? && guessed_letters[letter].include?(index)
+        misplaced_letters[letter] ||= 0
+        misplaced_letters[letter] += 1
       end
     end
 
@@ -40,7 +44,9 @@ class Solver
 
     attempt.letters.each.with_index do |(letter, mark), _index|
       if mark == :grey && (guessed_letters[letter].present? || possible_letters[letter].present?)
-        excess_letters[letter] = (guessed_letters[letter] || []).size + (possible_letters[letter] || []).size
+        excess_letters[letter] = (guessed_letters[letter] || []).size +
+                                 (possible_letters[letter] || []).size -
+                                 (misplaced_letters[letter] || 0)
       end
     end
 
@@ -52,8 +58,9 @@ class Solver
         when :white
           word[index] == letter ||
             word.index(letter).nil? ||
-            !guessed_letters[letter].nil? &&
-            ((0...word.length).find_all { |i| word[i,1] == letter } - guessed_letters[letter]).empty?
+            guessed_letters[letter].present? &&
+            (((0...word.length).find_all { |i| word[i,1] == letter } - guessed_letters[letter]).size -
+              misplaced_letters[letter].to_i) > 0
         when :grey
           excess_letters[letter].nil? && word.index(letter).present? ||
             excess_letters[letter].present? && (
